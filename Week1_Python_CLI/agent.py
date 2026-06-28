@@ -1,36 +1,52 @@
-from groq import Groq
+import asyncio
 import os
-import time
 import argparse
 from dotenv import load_dotenv
+from groq import AsyncGroq, RateLimitError
 
 load_dotenv()
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-def ask_groq(prompt, retries=3):
+api_key = os.getenv("GROQ_API_KEY")
+if not api_key:
+    raise ValueError("GROQ_API_KEY not found. Check your .env file.")
+
+client = AsyncGroq(api_key=api_key)
+
+async def ask_groq(prompt: str, retries: int = 3) -> str:
     for attempt in range(retries):
         try:
-            response = client.chat.completions.create(
+            response = await client.chat.completions.create(
                 model="llama-3.3-70b-versatile",
-                messages=[{"role": "user", "content": prompt}])
+                messages=[{"role": "user", "content": prompt}],
+                timeout=30.0
+            )
             return response.choices[0].message.content
-            
+
+        except RateLimitError:
+            wait = 10
+            print(f"[{attempt+1}/{retries}] Rate limited — waiting {wait}s...")
+            await asyncio.sleep(wait)
+
         except Exception as e:
-            if "429" in str(e):
-                print("Rate Limiting error : Too many Requests")
-                time.sleep(10)
+            wait = 2 ** attempt
+            if "timeout" in str(e).lower():
+                print(f"[{attempt+1}/{retries}] Timeout — retrying in {wait}s...")
             else:
-                wait = 2 ** attempt 
-                print(f"[Attempt {attempt+1}/{retries}] Error: {e} — retrying in {wait}s...")
-                time.sleep(wait)
-    return None
+                print(f"[{attempt+1}/{retries}] Error: {e} — retrying in {wait}s...")
+            await asyncio.sleep(wait)
 
-def main():
-    parser =  argparse.ArgumentParser(description = "Gemini CLI Agent")
-    parser.add_argument("prompt",type=str  , help="Your Prompt")
+    raise RuntimeError(f"All {retries} attempts failed.")
+
+async def main():
+    parser = argparse.ArgumentParser(description="Groq CLI Agent")
+    parser.add_argument("prompt", type=str, help="Your prompt")
     args = parser.parse_args()
-    result = ask_groq(args.prompt)
-    print("\nGroq:", result)
-if __name__ ==  "__main__":
-    main()
 
+    try:
+        result = await ask_groq(args.prompt)
+        print("\nGroq:", result)
+    except Exception as e:
+        print(f"\nError: {e}")
+
+if __name__ == "__main__":
+    asyncio.run(main())
