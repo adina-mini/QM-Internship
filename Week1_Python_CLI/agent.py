@@ -17,8 +17,11 @@ async def ask_groq(prompt: str, retries: int = 3) -> str:
         try:
             response = await client.chat.completions.create(
                 model="llama-3.3-70b-versatile",
-                messages=[{"role": "user", "content": prompt}],
+                
+                messages=[{"role": "user", "content": prompt}
+                ],
                 timeout=30.0
+                
             )
             return response.choices[0].message.content
 
