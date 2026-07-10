@@ -1,0 +1,11 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Memory Files
+chat_history.json
+summary.json
+entities.json
