@@ -35,7 +35,7 @@ def calculate(expression: str) -> str:
 
 async def convert_currency(amount: float, from_currency: str, to_currency: str) -> str:
     async with httpx.AsyncClient() as http:
-        # ✅ YEH API WORKING HAI
+       
         url = f"https://api.exchangerate-api.com/v4/latest/{from_currency.upper()}"
         r = await http.get(url, timeout=10.0)
         data = r.json()
