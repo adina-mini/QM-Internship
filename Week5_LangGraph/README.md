@@ -22,7 +22,7 @@ Week5_LangGraph/
 │
 ├── main.py          
 ├── graph.py        
-├── nodes.py
+├── nodes.py         #graph nodes
 ├── tools.py         # Tool implementations
 ├── state.py         # Agent state definition
 ├── utils.py         # LLM initialization
