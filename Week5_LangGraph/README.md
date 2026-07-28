@@ -20,9 +20,9 @@ A simple AI agent built with **LangGraph**, **LangChain**, and **Groq** that dem
 ```
 Week5_LangGraph/
 │
-├── main.py          # CLI entry point
-├── graph.py         # LangGraph workflow and routing
-├── nodes.py         # Chatbot and Tool nodes
+├── main.py          
+├── graph.py        
+├── nodes.py
 ├── tools.py         # Tool implementations
 ├── state.py         # Agent state definition
 ├── utils.py         # LLM initialization
