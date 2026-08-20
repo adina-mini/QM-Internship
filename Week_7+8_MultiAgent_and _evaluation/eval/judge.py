@@ -8,12 +8,7 @@ load_dotenv()
 
 judge_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-JUDGE_MODEL = "llama-3.3-70b-versatile"  # same model as Writer — best judging
-# quality. Note: this means a full
-# 10/10 eval run doubles total token
-# usage (10 generation + 10 judge
-# calls), so it can hit Groq's free
-# tier daily token cap faster.
+JUDGE_MODEL = "openai/gpt-oss-120b"
 
 JUDGE_PROMPT = """
 You are a strict evaluation judge for an AI multi-agent system's output.
@@ -53,7 +48,7 @@ def _parse_score(line: str) -> int:
     try:
         return int(line.split(":", 1)[1].strip())
     except (ValueError, IndexError):
-        return -1  # unparseable, flagged downstream rather than assumed
+        return -1
 
 
 @traceable(name="Judge", run_type="chain")

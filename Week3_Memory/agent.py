@@ -103,11 +103,11 @@ Return only the summary, no extra text."""
 async def manage_memory(history):
     if len(history) > max_history:
         # Keep only max_history number of recent messages
-        old_messages = history[:-max_history]  # Messages to remove
-        recent_messages = history[-max_history:]  # Messages to keep
+        old_messages = history[:-max_history]  
+        recent_messages = history[-max_history:]  
 
-        # Summarize ALL messages (old + recent) - this will have the FULL conversation
-        await summarize_old_messages(history)  # Pass ALL history, not just old_messages
+        
+        await summarize_old_messages(history)  # Pass ALL history
 
         return recent_messages
     return history
@@ -158,11 +158,11 @@ Example output: {{"name": "Adina", "location": "Bahawalpur", "major": "AI"}}"""
 
 # MEMORY STATUS PRINT
 def print_memory_status():
-    print("\n--- MEMORY STATUS ---")
+    print("\n MEMORY STATUS:- ")
     print(f"History: {len(conversation_history)} messages")
     print(f"Summary: {conversation_summary or 'empty'}")
     print(f"Entities: {entity_memory or 'none'}")
-    print("---------------------\n")
+    print("\n")
 
 
 conversation_history = load_history()
@@ -242,7 +242,7 @@ tools = [
         "type": "function",
         "function": {
             "name": "calculate",
-            "description": "ONLY evaluate arithmetic expressions such as addition, subtraction, multiplication, division, parentheses and percentages.",
+            "description": "ONLY evaluate arithmetic expressions such as addition, subtraction, multiplication, division, parentheses and percentages.factorial",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -339,7 +339,7 @@ async def ask_groq(prompt: str, retries: int = 3) -> str:
                 )
                 print(f"TOOL RESULT: {result}")
 
-                # TOOL CALL FORMATTING - serialization fix
+                # TOOL CALL FORMATTING 
                 messages.append(
                     {
                         "role": "assistant",

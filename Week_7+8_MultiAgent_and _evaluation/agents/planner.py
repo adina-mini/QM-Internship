@@ -5,6 +5,9 @@ from dotenv import load_dotenv
 from state import AgentState
 from logger import logger
 
+# 1. Mechanical tasks (whitelist) NEVER need research — force writer,even if the LLM second-guessed itself and picked researcher.
+# 2. Non-mechanical tasks NEVER skip research — force researcher,even if the LLM picked writer.
+
 load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
@@ -26,8 +29,7 @@ VALID_TASKS = {
 VALID_AGENTS = {"writer", "researcher"}
 
 # The ONLY tasks where Writer is allowed to run without research first —
-# purely mechanical work on content the user already provided, or a short
-# generic message. Anything needing real topic knowledge is NOT in this set.
+
 WRITER_ONLY_TASKS = {
     "summarize",
     "rewrite",
@@ -150,7 +152,7 @@ def _ask_planner(query: str, prior_output: str | None = None):
         messages.append({"role": "user", "content": FORMAT_REMINDER})
 
     response = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="openai/gpt-oss-120b",
         messages=messages,
         temperature=0,
     )
@@ -171,7 +173,6 @@ def planner_node(state: AgentState) -> AgentState:
         task, agent = _parse(output)
 
         if task is None or agent is None:
-            # Model didn't return a clean, parseable answer — ask again
             # instead of silently guessing which agent to use.
             logger.error(f"Planner: unparseable output, retrying. Got: {output!r}")
             retry_output = _ask_planner(query, prior_output=output)
@@ -183,20 +184,13 @@ def planner_node(state: AgentState) -> AgentState:
         logger.error(f"Planner error: {e}")
 
     if task is None or agent is None:
-        # Both attempts failed (API outage, model refusal, etc). This is an
-        # outage fallback, not a routing preference — logged loudly.
+        # Both attempts failed
         logger.error(
             "Planner: no valid decision after retry — defaulting to researcher due to failure, not policy."
         )
         task = task or "answer"
         agent = agent or "researcher"
 
-    # Hard enforcement, both directions — the whitelist is the single source
-    # of truth, not the LLM's per-call judgment call:
-    # 1. Mechanical tasks (whitelist) NEVER need research — force writer,
-    #    even if the LLM second-guessed itself and picked researcher.
-    # 2. Non-mechanical tasks NEVER skip research — force researcher,
-    #    even if the LLM picked writer.
     if task in WRITER_ONLY_TASKS and agent != "writer":
         logger.error(
             f"Planner: LLM picked researcher for mechanical task '{task}' — overriding to writer."

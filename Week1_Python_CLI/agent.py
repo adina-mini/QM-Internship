@@ -1,6 +1,5 @@
 import asyncio
 import os
-import argparse
 from dotenv import load_dotenv
 from groq import AsyncGroq, RateLimitError
 
@@ -12,18 +11,18 @@ if not api_key:
 
 client = AsyncGroq(api_key=api_key)
 
-async def ask_groq(prompt: str, retries: int = 3) -> str:
+# Accepts the entire history list instead of a single string prompt
+async def ask_groq(messages: list, retries: int = 3) -> str:
     for attempt in range(retries):
         try:
             response = await client.chat.completions.create(
                 model="llama-3.3-70b-versatile",
-                
-                messages=[{"role": "user", "content": prompt}
-                ],
+                # Pass the complete conversation context window
+                messages=messages,
                 timeout=30.0
-                
             )
-            return response.choices[0].message.content
+            # FIXED: Added  to target the first choice object in the list
+            return response.choices.message.content
 
         except RateLimitError:
             wait = 10
@@ -40,16 +39,41 @@ async def ask_groq(prompt: str, retries: int = 3) -> str:
 
     raise RuntimeError(f"All {retries} attempts failed.")
 
+# Active, running async chat loop
 async def main():
-    parser = argparse.ArgumentParser(description="Groq CLI Agent")
-    parser.add_argument("prompt", type=str, help="Your prompt")
-    args = parser.parse_args()
+    print("🤖 Interactive Async Chat Agent Started! (Type 'exit' or 'quit' to stop)")
+    print("This version uses a TEMPORARY Python list in RAM for memory.")
+    print("-" * 60)
 
-    try:
-        result = await ask_groq(args.prompt)
-        print("\nGroq:", result)
-    except Exception as e:
-        print(f"\nError: {e}")
+    # 1. Initialize the conversation history list in RAM.
+    conversation_history = [
+        {"role": "system", "content": "You are a helpful and concise AI engineering instructor."}
+    ]
+
+    while True:
+        # 2. Get user input in an async-friendly way
+        user_input = await asyncio.to_thread(input, "\nYou: ")
+
+        if user_input.strip().lower() in ["exit", "quit"]:
+            print("Goodbye! Clearing RAM memory...")
+            break
+
+        if not user_input.strip():
+            continue
+
+        # 3. Append user message to active RAM list
+        conversation_history.append({"role": "user", "content": user_input})
+
+        try:
+            # 4. Send the entire list history to Groq
+            result = await ask_groq(conversation_history)
+            print(f"\nGroq: {result}")
+
+            # 5. Append Groq's response so it is remembered in the next turn
+            conversation_history.append({"role": "assistant", "content": result})
+
+        except Exception as e:
+            print(f"\nError: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())
