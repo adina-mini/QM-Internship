@@ -1,0 +1,10 @@
+venv/
+vev/
+__pycache__/
+*.pyc
+.env
+*/venv/
+*/vev/
+*/__pycache__/
+*/*.pyc
+*/.env
