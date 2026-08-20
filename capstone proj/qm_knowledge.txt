@@ -1,0 +1,49 @@
+COMPANY: QM Logics
+LOCATION: Next to Azlan Medicare, Opposite Women Graduate College, Hasilpur Road, Bahawalpur, Pakistan
+CONTACT: info@qmlogics.com | +92 300-6824203
+WEBSITE: qmlogics.com
+SOCIALS: Facebook (facebook.com/qmlogics), LinkedIn (linkedin.com/company/qmlogics), Instagram (instagram.com/qmlogics)
+
+ABOUT:
+QM Logics is a software development company based in Bahawalpur, Pakistan, with over a decade of experience. They empower global enterprises with scalable, AI-driven software solutions focused on growth, efficiency, and long-term success. They emphasize custom solutions using the latest technologies, backed by rigorous QA/QC checks.
+
+SERVICES OFFERED:
+
+1. Web Development
+Web development services for businesses of all sizes — seamless design, scalable functionality, responsive and user-friendly experiences to drive growth. Tech includes Laravel, React.js, Node.js, WordPress, HTML5, CSS, Tailwind CSS, Next.js.
+
+2. Custom Software Development
+Tailored software solutions optimizing performance and scalability, addressing unique business requirements for enhanced efficiency and growth. Includes CRM development.
+
+3. Mobile App Development
+Development of intuitive, responsive apps for all platforms, ensuring seamless user experiences and robust functionality.
+
+4. Generative AI
+AI solutions applied to text generation, image creation, and product design — tailored to business needs to add real value and support business goals.
+
+5. Digital Transformation
+Consulting to improve tech, processes, and culture — helping businesses stay competitive, adapt, and improve growth, efficiency, and flexibility.
+
+6. QA Testing & Automation
+Ensures apps, websites, and products meet quality standards by catching issues before release, improving reliability, and providing a smooth user experience.
+
+PROCESS / WHY CLIENTS CHOOSE QM LOGICS:
+- High-Quality Work: custom solutions built with latest technologies, over a decade of expertise, and strict quality checks.
+- Crafted for Perfection: focus on customer experience — user-friendly, engaging, fully responsive projects.
+- Software Quality Assurance: dedicated QA/QC teams ensure every project and iteration is error-free and meets industry standards.
+- Perfect Execution: seamless project deployment plus free 24/7 technical support as outlined in the contract..
+
+CLIENT TESTIMONIALS:
+- Ahmed Khattab (Egypt): praised QM Logics as professional and dedicated, recommends their services.
+- Adam (London): praised their Laravel skills, solving a task another developer couldn't.
+- Neal De Vreede (Netherlands): praised fast delivery, high quality, and seamless communication.
+
+PRICING POLICY:
+QM Logics does not publish fixed pricing for services. Pricing depends on project scope and requirements. If a user asks about pricing, cost, budget, or rates, do NOT provide a number. Instead, direct them to contact the team at info@qmlogics.com or via the "Request a Quote" section on the website for a custom quote.
+
+SUGGESTED STARTER QUESTIONS (for UI display, not retrieval):
+- What services does QM Logics offer?
+- Where is QM Logics located?
+- How can I contact QM Logics?
+- Does QM Logics build mobile apps?
+- What kind of projects has QM Logics worked on?
