@@ -1,49 +1,574 @@
-COMPANY: QM Logics
-LOCATION: Next to Azlan Medicare, Opposite Women Graduate College, Hasilpur Road, Bahawalpur, Pakistan
-CONTACT: info@qmlogics.com | +92 300-6824203
-WEBSITE: qmlogics.com
-SOCIALS: Facebook (facebook.com/qmlogics), LinkedIn (linkedin.com/company/qmlogics), Instagram (instagram.com/qmlogics)
+from pathlib import Path
 
-ABOUT:
-QM Logics is a software development company based in Bahawalpur, Pakistan, with over a decade of experience. They empower global enterprises with scalable, AI-driven software solutions focused on growth, efficiency, and long-term success. They emphasize custom solutions using the latest technologies, backed by rigorous QA/QC checks.
+kb = """QM LOGICS — WEBSITE KNOWLEDGE BASE
+Version: 2026-08-26
 
-SERVICES OFFERED:
+Purpose: Ground the QM Assistant in verified public information from the QM LOGICS website.
+Important: The assistant must not invent pricing, timelines, capabilities, clients, guarantees, or policies that are not present in this knowledge base.
+
+==================================================
+1. COMPANY OVERVIEW
+==================================================
+
+Company: QM LOGICS
+
+Positioning:
+QM LOGICS is a software and IT solutions company focused on software innovation, business growth, operational efficiency, and scalable technology solutions.
+
+The company describes itself as a technology partner delivering software development and IT solutions for businesses.
+
+Core values/messages presented on the website:
+- Quality development
+- Reliable systems
+- Customer-first approach
+- Client satisfaction
+- Prompt solutions
+- Scalable and user-focused technology
+
+QM LOGICS states that it has more than 10 years of experience.
+
+Primary company goal:
+To be a global leader in software innovation, shaping the future through technology that enriches lives and builds stronger businesses.
+
+Website:
+https://qmlogics.com/
+
+Contact:
+Email: info@qmlogics.com
+Phone: +92-300-6824203
+Location: Next to Azlan Medicare, Opposite Women Graduate College, Hasilpur Road, Bahawalpur, Pakistan
+
+CEO name: Mudassir Saeed
+
+==================================================
+2. CORE SERVICES
+==================================================
+
+QM LOGICS currently presents these six main services:
 
 1. Web Development
-Web development services for businesses of all sizes — seamless design, scalable functionality, responsive and user-friendly experiences to drive growth. Tech includes Laravel, React.js, Node.js, WordPress, HTML5, CSS, Tailwind CSS, Next.js.
-
-2. Custom Software Development
-Tailored software solutions optimizing performance and scalability, addressing unique business requirements for enhanced efficiency and growth. Includes CRM development.
-
-3. Mobile App Development
-Development of intuitive, responsive apps for all platforms, ensuring seamless user experiences and robust functionality.
-
+2. Mobile App Development
+3. Custom Software Development
 4. Generative AI
-AI solutions applied to text generation, image creation, and product design — tailored to business needs to add real value and support business goals.
-
 5. Digital Transformation
-Consulting to improve tech, processes, and culture — helping businesses stay competitive, adapt, and improve growth, efficiency, and flexibility.
-
 6. QA Testing & Automation
-Ensures apps, websites, and products meet quality standards by catching issues before release, improving reliability, and providing a smooth user experience.
 
-PROCESS / WHY CLIENTS CHOOSE QM LOGICS:
-- High-Quality Work: custom solutions built with latest technologies, over a decade of expertise, and strict quality checks.
-- Crafted for Perfection: focus on customer experience — user-friendly, engaging, fully responsive projects.
-- Software Quality Assurance: dedicated QA/QC teams ensure every project and iteration is error-free and meets industry standards.
-- Perfect Execution: seamless project deployment plus free 24/7 technical support as outlined in the contract..
+The services page currently lists a starting rate of $20/hour for these services. The assistant should present this only as the website's listed starting rate and should NOT calculate a project price from it unless an approved pricing rule is added.
 
-CLIENT TESTIMONIALS:
-- Ahmed Khattab (Egypt): praised QM Logics as professional and dedicated, recommends their services.
-- Adam (London): praised their Laravel skills, solving a task another developer couldn't.
-- Neal De Vreede (Netherlands): praised fast delivery, high quality, and seamless communication.
 
-PRICING POLICY:
-QM Logics does not publish fixed pricing for services. Pricing depends on project scope and requirements. If a user asks about pricing, cost, budget, or rates, do NOT provide a number. Instead, direct them to contact the team at info@qmlogics.com or via the "Request a Quote" section on the website for a custom quote.
+==================================================
+3. WEB DEVELOPMENT
+==================================================
 
-SUGGESTED STARTER QUESTIONS (for UI display, not retrieval):
-- What services does QM Logics offer?
-- Where is QM Logics located?
-- How can I contact QM Logics?
-- Does QM Logics build mobile apps?
-- What kind of projects has QM Logics worked on?
+Service:
+Web Development
+
+Website description:
+QM LOGICS provides web development services for businesses of different sizes, focusing on seamless design, scalable functionality, responsive experiences, usability, performance, security, and maintainability.
+
+Capabilities described on the website:
+- Full-stack web applications
+- Corporate websites
+- Bespoke web applications
+- Enterprise web solutions
+- Front-end development
+- Back-end development
+- Responsive design
+- API/integration work
+- Web application security
+- Quality assurance
+- Ongoing support, monitoring, and updates
+
+Development approach:
+- Understand client needs, industry requirements, and user expectations
+- Plan scalable solutions
+- Focus on usability, performance, and modern design
+- Build using modern frameworks and secure architecture
+- Apply best coding practices
+- Test functionality, speed, security, and cross-browser compatibility
+- Provide post-deployment support and updates
+
+Technologies listed on the Web Development page:
+- JavaScript
+- React.js
+- Next.js
+- Node.js
+- Express.js
+- MySQL
+- MongoDB
+- PostgreSQL
+- PHP
+- Laravel
+- WordPress
+- Shopify
+- Python
+- Django
+- Flask
+- HTML
+- CSS
+- Bootstrap
+- Tailwind CSS
+
+Web development page:
+https://qmlogics.com/web-development/
+
+
+==================================================
+4. MOBILE / APPLICATION DEVELOPMENT
+==================================================
+
+QM LOGICS provides mobile and application development services.
+
+The company's public content discusses:
+- iOS application development
+- Android application development
+- Cross-platform application development
+- React Native
+- Flutter
+- Expo
+- Native development
+- Cloud applications
+- Enterprise applications
+- SaaS applications
+- Progressive Web Apps
+- Custom web applications
+- Custom mobile applications
+
+Application types discussed by QM LOGICS:
+- Mobile apps
+- Web apps
+- Enterprise apps
+- Cloud apps
+- SaaS platforms
+- Native apps
+- Progressive Web Apps
+
+The appropriate technology depends on the product requirements, target users, platform needs, performance requirements, and hardware requirements.
+
+The company states that it handles iOS and Android development based on the target market and project requirements.
+
+Examples of application domains discussed:
+- Healthcare
+- Fintech
+- Food delivery
+- Fitness
+- E-commerce
+- Enterprise applications
+
+Important:
+Do not claim that QM LOGICS uses a specific mobile framework for every project. Technology choice should be presented as project-dependent.
+
+
+==================================================
+5. CUSTOM SOFTWARE DEVELOPMENT
+==================================================
+
+Service:
+Custom Software Development
+
+QM LOGICS describes this service as niche-focused, secure, high-performance software development designed around unique business requirements.
+
+Examples specifically mentioned:
+- Custom CRM
+- On-demand delivery platforms
+- Fantasy sports applications
+- Marketplace solutions
+- Custom web software
+- Custom mobile software
+- Desktop software
+- Enterprise solutions
+
+Approach:
+- Understand business requirements and pain points
+- Identify opportunities
+- Define a strategic transformation path
+- Design and develop customized solutions
+- Provide deployment, maintenance, support, and technical guidance
+
+Key positioning:
+QM LOGICS aims to create software around the customer's actual business needs rather than forcing the business into a generic product.
+
+Technologies listed:
+- JavaScript
+- React.js
+- Next.js
+- Node.js
+- Express.js
+- MySQL
+- MongoDB
+- PostgreSQL
+- PHP
+- Laravel
+- WordPress
+- Shopify
+- Python
+- Django
+- Flask
+- HTML
+- CSS
+- Bootstrap
+- Tailwind CSS
+
+Page:
+https://qmlogics.com/software-development/
+
+
+==================================================
+6. GENERATIVE AI
+==================================================
+
+Service:
+Generative AI
+
+QM LOGICS describes itself as providing scalable, customized, user-centric Generative AI solutions for businesses.
+
+Capabilities listed:
+- Intelligent content generation
+- Data-driven insights
+- Process automation
+- Custom AI solutions
+- Scalable AI systems
+
+Business goals:
+- Automate processes
+- Improve efficiency
+- Generate content
+- Produce actionable insights
+- Support innovation
+- Scale AI capabilities with business growth
+
+Technology choices listed on the Generative AI page:
+- Google Cloud Platform (GCP)
+- Keras
+- Microsoft Azure
+- TensorFlow
+- AWS
+- R
+- PyTorch
+- Python
+- JavaScript
+- GraphQL
+- OpenAI
+- Node.js
+- Vector databases
+
+QM LOGICS states that its AI solutions are tailored to business objectives and processes rather than being one-size-fits-all.
+
+The company also states that it supports AI model building, development, deployment, and fine-tuning.
+
+Page:
+https://qmlogics.com/generative-ai/
+
+
+==================================================
+7. DIGITAL TRANSFORMATION
+==================================================
+
+Service:
+Digital Transformation
+
+QM LOGICS describes digital transformation as helping businesses modernize, innovate, improve efficiency, and grow.
+
+Approach:
+1. Understand business goals and problems
+2. Review the existing digital environment and systems
+3. Identify opportunities for improvement
+4. Introduce customized and scalable technology solutions
+5. Modernize systems and processes
+6. Improve customer experience
+7. Continuously optimize and support the transformation
+
+Capabilities listed:
+- Business Process Optimization
+- Legacy System Modernization
+- Customer Experience Transformation
+- Data-Driven Decision Making
+
+Technologies/capabilities listed:
+- AWS
+- Google Cloud Platform
+- Microsoft Azure
+- OpenAI
+- Cybersecurity
+- Microservices
+- RPA
+- Compliance
+- API integrations
+
+Page:
+https://qmlogics.com/digital-transformation/
+
+
+==================================================
+8. QA TESTING & AUTOMATION
+==================================================
+
+Service:
+QA Testing & Automation
+
+QM LOGICS describes QA as a quality discipline covering software quality throughout development rather than only at the final stage.
+
+QA-related focus:
+- Test planning
+- Test cases
+- Bug identification and reporting
+- Quality standards
+- Defect tracking
+- Automated testing
+- Regression prevention
+- Continuous quality improvement
+- Testing alongside development
+- CI/pipeline integration
+
+The company's QA content emphasizes that testing should happen throughout the software lifecycle.
+
+Automation guidance discussed by QM LOGICS:
+- Automate high-risk and frequently repeated workflows first
+- Choose frameworks appropriate to the team's technology
+- Write tests alongside feature development
+- Connect testing to the development pipeline
+
+The website discusses frameworks such as:
+- Selenium
+- TestNG
+- JUnit
+- Cypress
+- Playwright
+
+Important:
+Do not claim all of these are used on every QM LOGICS project. Present them as technologies/frameworks discussed by the company.
+
+Page:
+https://qmlogics.com/quality-assurance-testing-and-automation/
+
+
+==================================================
+9. COMPANY METHODOLOGY / PROCESS
+==================================================
+
+QM LOGICS presents a six-step methodology:
+
+1. Project Vision
+Creating innovative and scalable solutions aimed at long-term success.
+
+2. UI/UX
+Designing intuitive, user-centered interfaces for engaging and seamless experiences.
+
+3. Business Analysis
+Understanding needs and identifying data-driven solutions for business growth.
+
+4. Development
+Building customized and scalable solutions.
+
+5. Technology Consultation
+Providing guidance on technology choices and strategies.
+
+6. Quality Assurance
+Testing solutions and maintaining quality standards.
+
+The services page also emphasizes:
+- High-quality work
+- Customer experience
+- User-friendly and responsive projects
+- QA/QC throughout projects
+- Smooth deployment
+- Free 24/7 technical support where included in the contract
+
+
+==================================================
+10. PORTFOLIO
+==================================================
+
+Portfolio projects currently described on the Services page:
+
+1. Luxury Watches Website
+Description:
+A sleek and elegant e-commerce website for premium watches, focused on luxury design and a smooth shopping journey.
+
+2. Health Products Website
+Description:
+A professional e-commerce site for medical equipment, focused on trust, usability, and product management.
+
+3. Health & Wellness Website
+Description:
+A pharmacy-inspired e-commerce experience designed around trust, convenience, and health/wellness product selection.
+
+4. Equipment Website
+Description:
+A professional e-commerce platform for medical equipment with organized product presentation and secure transactions.
+
+5. Care & Cleaning Website
+Description:
+An online store for cleaning and care products with browsing, checkout, and delivery functionality.
+
+6. E-commerce Store
+Description:
+A scalable and user-friendly platform designed to improve online shopping experiences and business growth.
+
+7. Clothing Store
+Description:
+A responsive online clothing store with intuitive navigation and secure payment functionality.
+
+Important:
+The assistant should only claim portfolio details explicitly present in approved QM LOGICS content.
+
+
+==================================================
+11. CLIENT TESTIMONIALS
+==================================================
+
+Public testimonials shown by QM LOGICS include:
+
+Ahmed Khattab — Egypt:
+QM LOGICS is described as professional and dedicated, with a recommendation for other clients.
+
+Adam — London:
+Praised the company's Laravel skills and ability to solve a difficult development task.
+
+Neal De Vreede — Netherlands:
+Praised the quality and speed of delivery, attention to detail, and communication.
+
+These testimonials should be represented as client testimonials, not as independently verified performance statistics.
+
+
+==================================================
+12. PRICING
+==================================================
+
+The assistant must NOT:
+- Give a fixed project price unless explicitly provided by QM LOGICS.
+- Estimate a total project cost by multiplying hours.
+- Promise a specific budget.
+- Claim that every project uses the same rate.
+
+Recommended response when asked for a project price:
+
+
+==================================================
+13. CONTACT / LEAD INFORMATION
+==================================================
+
+Public contact details:
+Email: info@qmlogics.com
+Phone: +92-300-6824203
+Location: Next to Azlan Medicare, Opposite Women Graduate College, Hasilpur Road, Bahawalpur, Pakistan.
+
+The website provides a contact form asking for:
+- Name
+- Email
+- Phone number
+- Message
+
+The assistant may direct users to contact QM LOGICS when they want:
+- A project discussion
+- A quote
+- Technical consultation
+- More information
+- Human assistance
+
+
+==================================================
+14. REFUND POLICY — USE CAREFULLY
+==================================================
+
+QM LOGICS has a public Refund Policy updated June 11, 2026.
+
+Key points:
+- QM LOGICS provides professional software, IT consulting, web, mobile, digital and related services.
+- Advance payments, deposits, and milestone payments are generally non-refundable once work has commenced.
+- Refunds may be considered when work has not started, for duplicate payments caused by billing error, or when payment was processed incorrectly by the system.
+- Approved refunds are processed to the original payment method within 7–14 business days.
+- Completed milestones and delivered software/digital products are non-refundable.
+- Consulting, technical support, and advisory services already rendered are non-refundable.
+- Client-caused delays and change-of-mind after work has started are listed as non-refundable situations.
+- Clients may request project cancellation in writing; QM LOGICS may retain payments corresponding to completed work and allocated resources.
+- Recurring maintenance, hosting, support, or subscription fees already paid for the current billing period are generally non-refundable unless a separate agreement says otherwise.
+
+Refund contact:
+info@qmlogics.com
++92-300-6824203
+
+IMPORTANT:
+For legal, contractual, billing, or dispute questions, the assistant should summarize the public policy and recommend contacting QM LOGICS rather than giving legal advice or making an exception.
+
+
+==================================================
+15. BLOG / RESOURCE CONTENT
+==================================================
+
+QM LOGICS publishes technical articles covering topics such as:
+- Custom API development
+- Technical SEO
+- Data engineering
+- Web development
+- QA testing
+- SaaS development
+- Application development
+- WordPress/e-commerce development
+
+For the FIRST version of the assistant knowledge base, general blog articles should NOT be mixed into the core company-facts KB.
+
+Reason:
+Blog articles contain general technical advice and opinions. They are useful for a future "resources/blog search" feature but can confuse the assistant when answering questions such as "What services does QM LOGICS provide?"
+
+Recommended future structure:
+- Core company KB = verified company facts, services, portfolio, contact, policies.
+- Blog KB = separate searchable knowledge source for published articles.
+
+
+==================================================
+16. ASSISTANT RULES
+==================================================
+
+The QM Assistant should:
+
+- Answer company-specific questions using this knowledge base.
+- Prefer exact website facts over general model knowledge.
+- Clearly distinguish QM LOGICS capabilities from general industry information.
+- Provide the relevant page link when possible.
+- Recommend a service based on the user's stated needs, without pretending to perform a formal technical consultation.
+- Ask follow-up questions when project requirements are unclear.
+- Offer human contact when the question requires a quote, contract interpretation, technical scoping, or information not present in the KB.
+- Never invent clients, portfolio projects, pricing, timelines, guarantees, certifications, technologies, policies, or employees.
+- Never claim that a technology listed on a service page is mandatory for every project.
+- Never claim a specific project can be completed within a specific timeline unless an approved source says so.
+- Never provide a made-up project estimate.
+- Never override or reinterpret contractual/legal policies.
+- If information is missing or uncertain, say so and offer to connect the visitor with QM LOGICS.
+
+
+==================================================
+17. OFFICIAL SOURCE PAGES USED FOR THIS KB
+==================================================
+
+Homepage:
+https://qmlogics.com/
+
+Services:
+https://qmlogics.com/services/
+
+Web Development:
+https://qmlogics.com/web-development/
+
+Custom Software Development:
+https://qmlogics.com/software-development/
+
+Generative AI:
+https://qmlogics.com/generative-ai/
+
+Digital Transformation:
+https://qmlogics.com/digital-transformation/
+
+QA Testing & Automation:
+https://qmlogics.com/quality-assurance-testing-and-automation/
+
+Refund Policy:
+https://qmlogics.com/refund-policy/
+
+Note:
+This is a curated first-version KB based on the public QM LOGICS website pages reviewed on August 26, 2026. It intentionally excludes most blog content from the core KB so the assistant remains focused on accurate company information.
+"""
+
+path = Path("/mnt/data/qm_logics_website_kb.txt")
+path.write_text(kb, encoding="utf-8")
+print(f"Created: {path}")
