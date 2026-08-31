@@ -4,6 +4,7 @@
     "tone": "professional, warm, concise — sounds like a helpful company rep, not a generic chatbot",
     "kb_file": "qm_knowledge.txt",
     "fallback_message": "I don't have that information right now — please reach out to our team directly at info@qmlogics.com and they'll help you out.",
+    "off_topic_message": "That's not something I can help with — it's outside what we cover here. If you've got questions about QM Logics, our chatbot platform, or how it works for your business, I'm all ears. Otherwise, happy to connect you with the team if there's anything else going on.",
     "pricing_redirect": "I can't share exact pricing here since it depends on project scope, but our team can give you a custom quote — just drop your requirements at info@qmlogics.com or use the Request a Quote form on our site.",
     "starter_questions": [
         "What services does QM Logics offer?",
@@ -11,5 +12,46 @@
         "How can I contact QM Logics?",
         "Does QM Logics build mobile apps?",
         "What kind of projects has QM Logics worked on?"
-    ]
+    ],
+    "services": [
+        {
+            "name": "Web Development",
+            "url": "https://qmlogics.com/web-development/"
+        },
+        {
+            "name": "Mobile App Development",
+            "url": "https://qmlogics.com/app-development/"
+        },
+        {
+            "name": "Custom Software Development",
+            "url": "https://qmlogics.com/software-development/"
+        },
+        {
+            "name": "Generative AI",
+            "url": "https://qmlogics.com/generative-ai/"
+        },
+        {
+            "name": "Digital Transformation",
+            "url": "https://qmlogics.com/digital-transformation/"
+        },
+        {
+            "name": "QA Testing & Automation",
+            "url": "https://qmlogics.com/qa-testing/"
+        }
+    ],
+    "pages": [
+        {
+            "name": "Refund Policy",
+            "url": "https://qmlogics.com/refund-policy/"
+        },
+        {
+            "name": "Blog",
+            "url": "https://qmlogics.com/blog"
+        },
+        {
+            "name": "Careers",
+            "url": "https://qmlogics.com/careers"
+        }
+    ],
+    "consultation_url": "https://qmlogics.com/book-consultation/"
 }
