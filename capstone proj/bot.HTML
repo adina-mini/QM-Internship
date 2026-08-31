@@ -6,14 +6,15 @@
     <title>QM Assistant</title>
     <style>
         :root {
-            --bg-deep: #DED5CE;
-            --bg-panel: #F3EEEA;
-            --bg-bubble-bot: #E8E0DA;
-            --accent: #AB94A6;
-            --accent-soft: #C7B4C2;
-            --text-main: #4A3F47;
-            --text-muted: #8C7C87;
-            --success: #AB94A6;
+            --teal: #14919B;
+            --navy: #162466;
+            --orange: #FFA520;
+            --bg-white: #FFFFFF;
+            --bg-soft: #F4F7F8;
+            --bg-bubble-bot: #EFF4F5;
+            --text-main: #162466;
+            --text-muted: #7A8699;
+            --border-soft: #E3E9EC;
         }
 
         * {
@@ -24,76 +25,122 @@
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg-deep);
-            height: 100vh;
+            background: transparent;
+        }
+
+        /* ---- Floating launcher icon ---- */
+        #launcher {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--teal);
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(22, 36, 102, 0.25);
+            transition: transform 0.2s;
+            z-index: 9999;
         }
 
-        ::selection {
-            background: var(--accent-soft);
+        #launcher:hover {
+            transform: scale(1.06);
         }
 
+        #launcher svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        #launcher .notify-dot {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: var(--orange);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        /* ---- Chat window ---- */
         #chat-widget {
-            width: 400px;
-            height: 620px;
-            background: var(--bg-panel);
-            border-radius: 18px;
-            display: flex;
+            position: fixed;
+            bottom: 96px;
+            right: 24px;
+            width: 380px;
+            height: 580px;
+            background: var(--bg-white);
+            border-radius: 16px;
+            display: none;
             flex-direction: column;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(74, 63, 71, 0.18);
-            border: 1px solid rgba(74, 63, 71, 0.08);
+            box-shadow: 0 20px 60px rgba(22, 36, 102, 0.22);
+            border: 1px solid var(--border-soft);
+            z-index: 9999;
+        }
+
+        #chat-widget.open {
+            display: flex;
         }
 
         #chat-header {
-            padding: 18px 20px;
-            background: linear-gradient(135deg, var(--accent-soft), var(--bg-panel));
+            padding: 14px 16px;
+            background: var(--teal);
             display: flex;
             align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid rgba(74, 63, 71, 0.08);
+            gap: 10px;
         }
 
-        #chat-header .butterfly {
-            font-size: 20px;
+        #chat-header img.logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
             flex-shrink: 0;
-            filter: drop-shadow(0 0 4px rgba(171, 148, 166, 0.5));
-            animation: flutter 3s ease-in-out infinite;
         }
 
-        @keyframes flutter {
-
-            0%,
-            100% {
-                transform: rotate(-6deg) scale(1);
-            }
-
-            50% {
-                transform: rotate(6deg) scale(1.08);
-            }
+        #chat-header .title-block {
+            flex: 1;
         }
 
         #chat-header .title {
             font-weight: 600;
-            font-size: 15px;
-            color: var(--text-main);
+            font-size: 14.5px;
+            color: white;
         }
 
         #chat-header .subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, 0.85);
             margin-top: 1px;
+        }
+
+        #close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 4px;
+            opacity: 0.9;
+        }
+
+        #close-btn:hover {
+            opacity: 1;
         }
 
         #messages {
             flex: 1;
             overflow-y: auto;
-            padding: 18px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
+            background: var(--bg-soft);
         }
 
         #messages::-webkit-scrollbar {
@@ -101,7 +148,7 @@
         }
 
         #messages::-webkit-scrollbar-thumb {
-            background: var(--accent-soft);
+            background: var(--border-soft);
             border-radius: 10px;
         }
 
@@ -109,7 +156,7 @@
             max-width: 82%;
             padding: 10px 14px;
             border-radius: 14px;
-            font-size: 14px;
+            font-size: 13.5px;
             line-height: 1.5;
             white-space: pre-wrap;
             animation: fadeUp 0.25s ease;
@@ -134,16 +181,28 @@
             border-bottom-left-radius: 4px;
         }
 
+        .msg.bot ul {
+            margin: 6px 0 0 18px;
+            padding: 0;
+        }
+
+        .msg.bot li {
+            margin-bottom: 3px;
+        }
+
+        .msg.bot strong {
+            font-weight: 700;
+        }
+
         .msg.user {
-            background: var(--accent);
-            color: #FFFFFF;
+            background: var(--teal);
+            color: white;
             align-self: flex-end;
             border-bottom-right-radius: 4px;
         }
 
         .msg.typing {
             background: var(--bg-bubble-bot);
-            color: var(--text-muted);
             align-self: flex-start;
             display: flex;
             gap: 4px;
@@ -181,43 +240,94 @@
         }
 
         #starter-questions {
-            padding: 0 18px 12px;
+            padding: 0 16px 10px;
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 7px;
+            background: var(--bg-soft);
         }
 
         .chip {
-            background: var(--accent-soft);
-            color: var(--text-main);
-            border: none;
+            background: white;
+            color: var(--teal);
+            border: 1px solid var(--teal);
             border-radius: 20px;
-            padding: 7px 13px;
-            font-size: 12.5px;
+            padding: 6px 12px;
+            font-size: 12px;
             cursor: pointer;
             transition: background 0.15s;
         }
 
         .chip:hover {
-            background: var(--accent);
-            color: #FFFFFF;
+            background: var(--teal);
+            color: white;
+        }
+
+        /* ---- Action buttons under bot messages ---- */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+            max-width: 82%;
+        }
+
+        /* Default: teal outline — used for all normal service buttons */
+        .action-btn {
+            display: inline-block;
+            background: white;
+            color: var(--teal);
+            border: 1.5px solid var(--teal);
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .action-btn:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        /* Book a Consultation button — same teal style as service buttons, but two lines:
+     a small caption above the bold label, both inside one pill button. */
+        .action-btn.consult-btn {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 14px;
+            line-height: 1.3;
+        }
+
+        .action-btn.consult-btn .consult-prompt {
+            font-size: 10px;
+            font-weight: 500;
+            opacity: 0.75;
+        }
+
+        .action-btn.consult-btn .consult-label {
+            font-size: 12.5px;
+            font-weight: 700;
         }
 
         #input-row {
             display: flex;
-            padding: 14px;
+            padding: 12px;
             gap: 8px;
-            border-top: 1px solid rgba(74, 63, 71, 0.08);
+            border-top: 1px solid var(--border-soft);
+            background: white;
         }
 
         #user-input {
             flex: 1;
-            background: var(--bg-bubble-bot);
-            border: 1px solid transparent;
-            border-radius: 12px;
-            padding: 11px 14px;
+            background: var(--bg-soft);
+            border: 1px solid var(--border-soft);
+            border-radius: 10px;
+            padding: 10px 12px;
             color: var(--text-main);
-            font-size: 14px;
+            font-size: 13.5px;
             outline: none;
         }
 
@@ -226,64 +336,127 @@
         }
 
         #user-input:focus {
-            border-color: var(--accent);
+            border-color: var(--teal);
         }
 
         #send-btn {
-            background: var(--accent);
+            background: var(--teal);
             border: none;
-            border-radius: 12px;
-            width: 44px;
-            color: #FFFFFF;
-            font-size: 16px;
+            border-radius: 10px;
+            width: 40px;
+            color: white;
+            font-size: 15px;
             cursor: pointer;
-            transition: opacity 0.15s;
-        }
-
-        #send-btn:hover {
-            opacity: 0.85;
         }
 
         #send-btn:disabled {
             opacity: 0.4;
             cursor: not-allowed;
         }
+
+        #disclaimer {
+            text-align: center;
+            font-size: 10.5px;
+            color: #444444;
+            padding: 6px 10px 10px;
+            background: white;
+        }
     </style>
 </head>
 
 <body>
 
+    <div id="launcher">
+        <div class="notify-dot"></div>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4H20C21.1 4 22 4.9 22 6V16C22 17.1 21.1 18 20 18H8L4 22V6C4 4.9 4.9 4 4 4Z" fill="white"
+                stroke="white" stroke-width="0.5" stroke-linejoin="round" />
+            <circle cx="9" cy="11" r="1.3" fill="#14919B" />
+            <circle cx="13" cy="11" r="1.3" fill="#14919B" />
+            <circle cx="17" cy="11" r="1.3" fill="#14919B" />
+        </svg>
+    </div>
+
     <div id="chat-widget">
         <div id="chat-header">
-            <div class="butterfly">💃</div>
-            <div>
-                <div class="title">QM Assistant</div>
-                <div class="subtitle">Ask about our services, team, or projects</div>
+            <img class="logo" src="logo.png" alt="QM Logics logo" />
+            <div class="title-block">
+                <div class="title">QM Logics</div>
+                <div class="subtitle">Your AI Partner</div>
             </div>
+            <button id="close-btn">&times;</button>
         </div>
 
         <div id="messages"></div>
         <div id="starter-questions"></div>
 
         <div id="input-row">
-            <input id="user-input" type="text" placeholder="Type your question..." />
+            <input id="user-input" type="text" placeholder="Type your message..." />
             <button id="send-btn">➤</button>
         </div>
+        <div id="disclaimer">AI-generated replies — please verify important details.</div>
     </div>
 
     <script>
         const API_BASE = "http://127.0.0.1:8000"; // change to your deployed URL later
         const SESSION_ID = "web_" + Math.random().toString(36).slice(2);
 
+        const launcherEl = document.getElementById("launcher");
+        const widgetEl = document.getElementById("chat-widget");
+        const closeBtn = document.getElementById("close-btn");
         const messagesEl = document.getElementById("messages");
         const inputEl = document.getElementById("user-input");
         const sendBtn = document.getElementById("send-btn");
         const chipsEl = document.getElementById("starter-questions");
 
+        let hasOpenedBefore = false;
+
+        launcherEl.addEventListener("click", () => {
+            widgetEl.classList.add("open");
+            launcherEl.style.display = "none";
+            if (!hasOpenedBefore) {
+                hasOpenedBefore = true;
+                addMessage("Hi there! 👋 Welcome to QM Logics. How can I help you today?", "bot");
+                loadStarterQuestions();
+            }
+        });
+
+        closeBtn.addEventListener("click", () => {
+            widgetEl.classList.remove("open");
+            launcherEl.style.display = "flex";
+        });
+
+        function renderMarkdown(text) {
+            // Escape HTML first to avoid injection, then apply light markdown formatting
+            const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            const lines = escaped.split("\n");
+            let html = "";
+            let inList = false;
+            for (const line of lines) {
+                const bulletMatch = line.match(/^\s*[-*]\s+(.*)/);
+                if (bulletMatch) {
+                    if (!inList) { html += "<ul>"; inList = true; }
+                    html += `<li>${bulletMatch[1]}</li>`;
+                } else {
+                    if (inList) { html += "</ul>"; inList = false; }
+                    if (line.trim() === "") { html += "<br/>"; }
+                    else { html += line + "<br/>"; }
+                }
+            }
+            if (inList) html += "</ul>";
+            // Bold: **text** -> <strong>text</strong>
+            html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+            return html;
+        }
+
         function addMessage(text, sender) {
             const div = document.createElement("div");
             div.className = "msg " + sender;
-            div.textContent = text;
+            if (sender === "bot") {
+                div.innerHTML = renderMarkdown(text);
+            } else {
+                div.textContent = text;
+            }
             messagesEl.appendChild(div);
             messagesEl.scrollTop = messagesEl.scrollHeight;
             return div;
@@ -303,8 +476,36 @@
             if (el) el.remove();
         }
 
+        function hideStarterQuestions() {
+            chipsEl.style.display = "none";
+        }
+
+        function addActionButtons(actions) {
+            if (!actions || actions.length === 0) return;
+            const wrap = document.createElement("div");
+            wrap.className = "action-buttons";
+            actions.forEach(action => {
+                const a = document.createElement("a");
+                const isConsultButton = action.label.toLowerCase().includes("consultation");
+                a.href = action.url;
+                a.target = "_blank";
+                a.rel = "noopener";
+                if (isConsultButton) {
+                    a.className = "action-btn consult-btn";
+                    a.innerHTML = `<span class="consult-prompt">Interested? Let's talk</span><span class="consult-label">${action.label}</span>`;
+                } else {
+                    a.className = "action-btn";
+                    a.textContent = action.label;
+                }
+                wrap.appendChild(a);
+            });
+            messagesEl.appendChild(wrap);
+            messagesEl.scrollTop = messagesEl.scrollHeight;
+        }
+
         async function sendMessage(text) {
             if (!text.trim()) return;
+            hideStarterQuestions();
             addMessage(text, "user");
             inputEl.value = "";
             sendBtn.disabled = true;
@@ -319,6 +520,7 @@
                 const data = await res.json();
                 removeTyping();
                 addMessage(data.reply || "Something went wrong — please try again.", "bot");
+                addActionButtons(data.actions);
             } catch (err) {
                 removeTyping();
                 addMessage("Connection error — is the server running?", "bot");
@@ -331,7 +533,6 @@
             if (e.key === "Enter") sendMessage(inputEl.value);
         });
 
-        // Load starter question chips from backend
         async function loadStarterQuestions() {
             try {
                 const res = await fetch(`${API_BASE}/starter-questions`);
@@ -340,19 +541,13 @@
                     const btn = document.createElement("button");
                     btn.className = "chip";
                     btn.textContent = q;
-                    btn.addEventListener("click", () => {
-                        chipsEl.style.display = "none";
-                        sendMessage(q);
-                    });
+                    btn.addEventListener("click", () => sendMessage(q));
                     chipsEl.appendChild(btn);
                 });
             } catch (err) {
                 console.warn("Could not load starter questions:", err);
             }
         }
-
-        addMessage("Hi! I'm the QM Assistant. Ask me anything about our services, projects, or how to get in touch.", "bot");
-        loadStarterQuestions();
     </script>
 
 </body>
