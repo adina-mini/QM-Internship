@@ -4,8 +4,10 @@ import re
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from groq import Groq
+from deepgram import DeepgramClient
 
 load_dotenv()
 
@@ -20,6 +22,7 @@ app.add_middleware(
 )
 
 client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
+deepgram_client = DeepgramClient(api_key=os.environ.get("DEEPGRAM_API_KEY"))
 
 
 # LOADING CONFIG FILE
@@ -88,6 +91,10 @@ def evict_oldest_if_needed():
 class ChatRequest(BaseModel):
     message: str
     session_id: str = "default"
+
+
+class SpeakRequest(BaseModel):
+    text: str
 
 
 class Action(BaseModel):
@@ -168,6 +175,21 @@ def chat(req: ChatRequest):
     return ChatResponse(reply=reply, actions=actions)
 
 
+# Speak endpoint for Deepgram TTS
+@app.post("/speak")
+def speak(req: SpeakRequest):
+    response = deepgram_client.speak.v1.audio.generate(
+        text=req.text, model="aura-2-athena-en"
+    )
+
+    def audio_generator():
+        for chunk in response:
+            yield chunk
+
+    return StreamingResponse(audio_generator(), media_type="audio/mpeg")
+
+
+# Health check endpoint
 @app.get("/health")
 def health():
     return {"status": "ok", "client": CONFIG["client_id"]}
