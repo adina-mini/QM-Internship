@@ -272,7 +272,6 @@
             max-width: 82%;
         }
 
-        /* Default: teal outline — used for all normal service buttons */
         .action-btn {
             display: inline-block;
             background: white;
@@ -291,8 +290,6 @@
             color: white;
         }
 
-        /* Book a Consultation button — same teal style as service buttons, but two lines:
-     a small caption above the bold label, both inside one pill button. */
         .action-btn.consult-btn {
             display: inline-flex;
             flex-direction: column;
@@ -310,6 +307,49 @@
         .action-btn.consult-btn .consult-label {
             font-size: 12.5px;
             font-weight: 700;
+        }
+
+        /* ---- Speaker button on bot messages ---- */
+        .msg-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            align-self: flex-start;
+            max-width: 100%;
+        }
+
+        .speak-btn {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1.5px solid var(--border-soft);
+            background: white;
+            color: var(--teal);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: all 0.2s;
+        }
+
+        .speak-btn:hover {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        .speak-btn.playing {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        .speak-btn svg {
+            width: 14px;
+            height: 14px;
+            display: block;
         }
 
         #input-row {
@@ -339,6 +379,49 @@
             border-color: var(--teal);
         }
 
+        #mic-btn {
+            background: white;
+            border: 1px solid var(--border-soft);
+            border-radius: 10px;
+            width: 40px;
+            color: var(--teal);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        #mic-btn:hover {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        #mic-btn.recording {
+            background: #FFEAEA;
+            border-color: #E85D5D;
+            color: #E85D5D;
+            animation: pulse 1.2s infinite;
+        }
+
+        #mic-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
         #send-btn {
             background: var(--teal);
             border: none;
@@ -347,6 +430,11 @@
             color: white;
             font-size: 15px;
             cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        #send-btn:hover {
+            opacity: 0.85;
         }
 
         #send-btn:disabled {
@@ -392,13 +480,24 @@
 
         <div id="input-row">
             <input id="user-input" type="text" placeholder="Type your message..." />
+            <button id="mic-btn" title="Speak your question">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 15C13.6569 15 15 13.6569 15 12V6C15 4.34315 13.6569 3 12 3C10.3431 3 9 4.34315 9 6V12C9 13.6569 10.3431 15 12 15Z"
+                        stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M19 11V12C19 15.866 15.866 19 12 19C8.13401 19 5 15.866 5 12V11" stroke="currentColor"
+                        stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M12 19V22" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+            </button>
             <button id="send-btn">➤</button>
         </div>
         <div id="disclaimer">AI-generated replies — please verify important details.</div>
     </div>
 
     <script>
-        const API_BASE = "http://127.0.0.1:8000"; // change to your deployed URL later
+        const API_BASE = "http://127.0.0.1:8000";
         const SESSION_ID = "web_" + Math.random().toString(36).slice(2);
 
         const launcherEl = document.getElementById("launcher");
@@ -407,9 +506,34 @@
         const messagesEl = document.getElementById("messages");
         const inputEl = document.getElementById("user-input");
         const sendBtn = document.getElementById("send-btn");
+        const micBtn = document.getElementById("mic-btn");
         const chipsEl = document.getElementById("starter-questions");
 
         let hasOpenedBefore = false;
+        let currentAudio = null;
+        let currentAudioBtn = null;
+        let speakAbortController = null;
+
+        // Speaker SVG icons
+        const SPEAKER_SVG = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 10V14C3 14.5523 3.44772 15 4 15H7L11.6 18.6C12.4667 19.2667 13.6667 18.6667 13.6667 17.5333V6.46667C13.6667 5.33333 12.4667 4.73333 11.6 5.4L7 9H4C3.44772 9 3 9.44772 3 10Z" 
+                stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M17 8C18.5 9.5 18.5 14.5 17 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 6C22.5 8.5 22.5 15.5 20 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`;
+
+        const PAUSE_SVG = `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="4" width="4" height="16" fill="currentColor" rx="0.5"/>
+            <rect x="14" y="4" width="4" height="16" fill="currentColor" rx="0.5"/>
+        </svg>`;
+
+        function createSpeakerButton() {
+            const btn = document.createElement("button");
+            btn.className = "speak-btn";
+            btn.title = "Play this message";
+            btn.innerHTML = SPEAKER_SVG;
+            return btn;
+        }
 
         launcherEl.addEventListener("click", () => {
             widgetEl.classList.add("open");
@@ -427,7 +551,6 @@
         });
 
         function renderMarkdown(text) {
-            // Escape HTML first to avoid injection, then apply light markdown formatting
             const escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             const lines = escaped.split("\n");
             let html = "";
@@ -444,22 +567,158 @@
                 }
             }
             if (inList) html += "</ul>";
-            // Bold: **text** -> <strong>text</strong>
             html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
             return html;
         }
 
-        function addMessage(text, sender) {
-            const div = document.createElement("div");
-            div.className = "msg " + sender;
-            if (sender === "bot") {
-                div.innerHTML = renderMarkdown(text);
-            } else {
-                div.textContent = text;
+        function stripForSpeech(text) {
+            return text.replace(/\*\*/g, "").replace(/^\s*[-*]\s+/gm, "").replace(/\n+/g, ". ");
+        }
+
+        async function playText(text, btnEl) {
+            if (currentAudio && currentAudioBtn === btnEl) {
+                speakAbortController?.abort();
+
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+
+                if (currentAudio.src) {
+                    URL.revokeObjectURL(currentAudio.src);
+                }
+
+                currentAudio = null;
+                currentAudioBtn = null;
+
+                btnEl.classList.remove("playing");
+                btnEl.innerHTML = SPEAKER_SVG;
+
+                return;
             }
-            messagesEl.appendChild(div);
-            messagesEl.scrollTop = messagesEl.scrollHeight;
-            return div;
+
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+
+                if (currentAudio.src) {
+                    URL.revokeObjectURL(currentAudio.src);
+                }
+
+                currentAudio = null;
+            }
+
+            if (speakAbortController) {
+                speakAbortController.abort();
+            }
+
+            speakAbortController = new AbortController();
+            currentAudioBtn = btnEl;
+
+            document.querySelectorAll(".speak-btn").forEach(b => {
+                b.classList.remove("playing");
+                b.innerHTML = SPEAKER_SVG;
+            });
+
+            btnEl.classList.add("playing");
+            btnEl.innerHTML = PAUSE_SVG;
+
+            try {
+                const res = await fetch(`${API_BASE}/speak`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        text: stripForSpeech(text)
+                    }),
+                    signal: speakAbortController.signal
+                });
+
+                if (!res.ok) {
+                    throw new Error(`TTS request failed: ${res.status}`);
+                }
+
+                if (speakAbortController.signal.aborted) {
+                    return;
+                }
+
+                const blob = await res.blob();
+
+                if (speakAbortController.signal.aborted) {
+                    return;
+                }
+
+                const url = URL.createObjectURL(blob);
+                const audio = new Audio(url);
+                currentAudio = audio;
+
+                audio.onended = () => {
+                    URL.revokeObjectURL(url);
+
+                    if (currentAudio === audio) {
+                        currentAudio = null;
+                        currentAudioBtn = null;
+                    }
+
+                    btnEl.classList.remove("playing");
+                    btnEl.innerHTML = SPEAKER_SVG;
+                };
+
+                audio.onerror = () => {
+                    URL.revokeObjectURL(url);
+
+                    if (currentAudio === audio) {
+                        currentAudio = null;
+                        currentAudioBtn = null;
+                    }
+
+                    btnEl.classList.remove("playing");
+                    btnEl.innerHTML = SPEAKER_SVG;
+                };
+
+                await audio.play();
+
+            } catch (err) {
+                if (err.name === "AbortError") {
+                    return;
+                }
+
+                console.warn("Could not play audio:", err);
+
+                btnEl.classList.remove("playing");
+                btnEl.innerHTML = SPEAKER_SVG;
+
+                if (currentAudioBtn === btnEl) {
+                    currentAudio = null;
+                    currentAudioBtn = null;
+                }
+            }
+        }
+
+        function addMessage(text, sender) {
+            if (sender === "bot") {
+                const row = document.createElement("div");
+                row.className = "msg-row";
+
+                const div = document.createElement("div");
+                div.className = "msg bot";
+                div.innerHTML = renderMarkdown(text);
+
+                const speakBtn = createSpeakerButton();
+                speakBtn.addEventListener("click", () => playText(text, speakBtn));
+
+                row.appendChild(div);
+                row.appendChild(speakBtn);
+                messagesEl.appendChild(row);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+                return div;
+            } else {
+                const div = document.createElement("div");
+                div.className = "msg user";
+                div.textContent = text;
+                messagesEl.appendChild(div);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+                return div;
+            }
         }
 
         function showTyping() {
@@ -532,6 +791,44 @@
         inputEl.addEventListener("keydown", (e) => {
             if (e.key === "Enter") sendMessage(inputEl.value);
         });
+
+        const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognizer = null;
+        let isRecording = false;
+
+        if (SpeechRecognitionAPI) {
+            recognizer = new SpeechRecognitionAPI();
+            recognizer.lang = "en-US";
+            recognizer.interimResults = false;
+            recognizer.maxAlternatives = 1;
+
+            recognizer.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                sendMessage(transcript);
+            };
+
+            recognizer.onend = () => {
+                isRecording = false;
+                micBtn.classList.remove("recording");
+            };
+
+            recognizer.onerror = () => {
+                isRecording = false;
+                micBtn.classList.remove("recording");
+            };
+
+            micBtn.addEventListener("click", () => {
+                if (isRecording) {
+                    recognizer.stop();
+                    return;
+                }
+                isRecording = true;
+                micBtn.classList.add("recording");
+                recognizer.start();
+            });
+        } else {
+            micBtn.style.display = "none";
+        }
 
         async function loadStarterQuestions() {
             try {
